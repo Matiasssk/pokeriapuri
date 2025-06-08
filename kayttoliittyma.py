@@ -39,6 +39,7 @@ def nayta_suositus(suositus, kadessa=None, poydassa=None):
 
 
 '''
+'''
 import tkinter as tk
 ikkuna=teksti_label=None
 
@@ -54,3 +55,39 @@ def nayta_suositus(suositus,kadessa=None,poydassa=None):
         teksti_label=tk.Label(ikkuna,text=txt,font=('Helvetica',14),fg='white',bg='black',justify='center');teksti_label.pack(expand=True,fill='both');ikkuna.update()
     else:
         teksti_label.config(text=txt);ikkuna.update()
+'''
+
+import tkinter as tk
+ikkuna = teksti_label = None
+
+def nayta_suositus(suositus, kadessa=None, poydassa=None, potti=None, call=None, pot_odds=None):
+    global ikkuna, teksti_label
+    txt = suositus
+
+    if kadessa or poydassa:
+        txt += '\n'
+        if kadessa:
+            txt += f"\nKädessä: {', '.join(kadessa)}"
+        if poydassa:
+            txt += f"\nPöydässä: {', '.join(poydassa)}"
+
+    if potti is not None and call is not None:
+        txt += f"\n\nPotti: {potti} | Call: {call}"
+        if pot_odds is not None:
+            txt += f"\nPot Odds: {pot_odds:.2%}"
+
+    if ikkuna is None:
+        ikkuna = tk.Tk()
+        ikkuna.title('Pokeriapuri')
+        ikkuna.geometry('400x250+10+10')
+        ikkuna.attributes('-topmost', True)
+        ikkuna.overrideredirect(True)
+        teksti_label = tk.Label(
+            ikkuna, text=txt, font=('Helvetica', 14),
+            fg='white', bg='black', justify='center'
+        )
+        teksti_label.pack(expand=True, fill='both')
+        ikkuna.update()
+    else:
+        teksti_label.config(text=txt)
+        ikkuna.update()
